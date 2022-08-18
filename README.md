@@ -133,6 +133,27 @@ jdbc url은 jdbc:h2:mem:testdb로 해야된다. 경로를 그렇게 지정해주
 
 ### SpringBoot & Handlebars로 화면 만들기
 
+#### SpringBoot 순환 참조 금지 해제
+> 스프링 부트 2.6 부터 순환 참조를 기본적으로 금지하도록 되어있다.
+> 그래서 __Requested bean is currently in creation: Is there an unresolvable circular reference?__ 와 같은 에러가 발생한다.
+> 
+> 이것은 application.yml에 아래와 같은 코드를 추가하면된다.
+
+```yaml
+spring:
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+
+  main:
+    allow-circular-references: true
+```
+ - main부터 allow-circular-references: true값을 추가하면 된다.
+
 ### AWS EC2 & AWS RDS 운영 환경 구축
 
 ### EC2 수동 배포해보기
