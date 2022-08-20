@@ -154,6 +154,24 @@ spring:
 ```
  - main부터 allow-circular-references: true값을 추가하면 된다.
 
+#### @Transactional(readOnly = true) 트랜잭션에서 빨간줄 생기는 에러
+트랜잭션의 import 가 alt+enter로 추가하다보니 마구잡이로 추가가 되면서
+
+import javax.transaction.Transactional;이 선택되었다.
+이걸로 하게되면 readOnly=true에 대한 옵션에서 에러가 발생한다.
+해당 어노테이션에는 위와 같은 옵션이 없기 때문이다.
+
+```java
+import org.springframework.transaction.annotation.Transactional;
+```
+ - 위와 같은 package로 올바르게 import 하면 문제를 해결할 수 있다.
+
+#### 트랜잭션에 readOnly 기능 옵션추가
+```java
+@Transactional(readOnly = true)
+```
+옵션(readOnly = true)을 주면 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도가 개선되기 때문에 특별히 등록/수정/삭제 기능이 없는 메소드에선 사용하는걸 추천한다.
+
 ### AWS EC2 & AWS RDS 운영 환경 구축
 
 ### EC2 수동 배포해보기

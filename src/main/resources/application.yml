@@ -1,11 +1,21 @@
 spring:
+  profiles:
+    active: local
+
+# Local 환경
+---
+spring:
+  profiles: local
+  datasource:
+    data: classpath:data-h2.sql
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
   h2:
     console:
       enabled: true
-
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
-
   main:
     allow-circular-references: true
